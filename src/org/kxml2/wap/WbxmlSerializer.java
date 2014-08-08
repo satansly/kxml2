@@ -483,7 +483,7 @@ public class WbxmlSerializer implements XmlSerializer {
      */
     public int addToStringTable(String s, boolean mayPrependSpace) throws IOException {
         if (headerSent) {
-            throw new IOException("stringtable sent");
+            throw new IOException("string table sent");
         }
         
         int i = stringTableBuf.size();
@@ -499,8 +499,10 @@ public class WbxmlSerializer implements XmlSerializer {
         }
         int j = s.lastIndexOf(' ');
         if(j > 1){
-                stringTable.put(s.substring(j), new Integer(i+j));
-                stringTable.put(s.substring(j+1), new Integer(i+j+1));
+            String t = s.substring(j);
+            int k = t.getBytes("utf-8").length;
+            stringTable.put(t, new Integer(i+k));
+            stringTable.put(s.substring(j+1), new Integer(i+k+1));
         }
                 
         writeStrI(stringTableBuf, s);
