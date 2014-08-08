@@ -127,7 +127,20 @@ public class KXmlSerializer implements XmlSerializer {
             }
         }
     }
+    /* To write unescaped strings as inner content to tags */
+    private final void writeUnescaped(String s)
+            throws IOException {
 
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            switch (c) {
+                default:
+                    writer.write(c);
+
+
+            }
+        }
+    }
     /*
     	private final void writeIndent() throws IOException {
     		writer.write("\r\n");
@@ -522,7 +535,13 @@ public class KXmlSerializer implements XmlSerializer {
         text(new String(text, start, len));
         return this;
     }
-
+    /* Get raw unescaped text */
+    public final XmlSerializer rawText(String text) throws IOException {
+        check(false);
+        indent[depth] = false;
+        writeUnescaped(text);
+        return this;
+    }
     public void cdsect(String data) throws IOException {
         check(false);
         writer.write("<![CDATA[");
