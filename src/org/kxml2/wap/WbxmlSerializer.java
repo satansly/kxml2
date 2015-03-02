@@ -492,7 +492,6 @@ public class WbxmlSerializer implements XmlSerializer {
             s = ' ' + s;
             offset++; 
         }
-        
         stringTable.put(s, new Integer(i));
         if(s.charAt(0) == ' '){
             stringTable.put(s.substring(1), new Integer(i+1));
